@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"net/url"
 	"strconv"
-
-	"github.com/coscms/sdk/sdk_options"
 )
 
 // CheckoutOptions  付款参数
@@ -70,7 +68,7 @@ func (c *CheckoutOptions) SetDefaults(get func(string) string) *CheckoutOptions 
 	return c
 }
 
-func (c *CheckoutOptions) URLValues(apiKey string, signGenerators ...sdk_options.Signaturer) url.Values {
+func (c *CheckoutOptions) URLValues() url.Values {
 	formData := url.Values{}
 	formData.Set(`appID`, c.AppID)
 	formData.Set(`appUID`, c.AppUID)
@@ -100,21 +98,7 @@ func (c *CheckoutOptions) URLValues(apiKey string, signGenerators ...sdk_options
 		formData.Set(`nonce`, c.Nonce)
 	}
 
-	var signGenerator func(url.Values, string) string
-	if len(signGenerators) > 0 {
-		signGenerator = signGenerators[0]
-	} else {
-		signGenerator = sdk_options.GenSign
-	}
-	if signGenerator != nil {
-		sign := signGenerator(formData, apiKey)
-		formData.Set(`sign`, sign)
-	}
 	return formData
-}
-
-func (c *CheckoutOptions) Encode(apiKey string, signGenerators ...sdk_options.Signaturer) string {
-	return c.URLValues(apiKey, signGenerators...).Encode()
 }
 
 func (c *CheckoutOptions) String() string {

@@ -7,7 +7,7 @@ import (
 )
 
 func (o *Options) ToURL(urlPath string, strength ...bool) (uri string, formData url.Values, err error) {
-	formData = o.generator.URLValues(o.GetAppSecret(), o.signaturer)
+	formData = o.generator.URLValues()
 	appID := formData.Get(`appID`)
 	if len(appID) == 0 {
 		appID = o.GetAppID()
@@ -23,7 +23,7 @@ func (o *Options) ToURL(urlPath string, strength ...bool) (uri string, formData 
 	if len(strength) > 0 && strength[0] {
 		appSecret = o.StrengthenSafeSecret(appSecret) // 加强防篡改安全性
 	}
-	formData = BuildURLValues(formData, appSecret)
+	formData = BuildURLValues(formData, appSecret, o.signaturer)
 	uri = o.GetApiEndpoint() + urlPath
 	return
 }

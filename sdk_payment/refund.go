@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"net/url"
 	"strconv"
-
-	"github.com/coscms/sdk/sdk_options"
 )
 
 // RefundOptions  退款参数
@@ -41,7 +39,7 @@ func (c *RefundOptions) SetDefaults(get func(string) string) *RefundOptions {
 	return c
 }
 
-func (c *RefundOptions) URLValues(apiKey string, signGenerators ...sdk_options.Signaturer) url.Values {
+func (c *RefundOptions) URLValues() url.Values {
 	formData := url.Values{}
 	formData.Set(`appID`, c.AppID)
 	formData.Set(`orderNo`, c.OrderNo)
@@ -56,22 +54,7 @@ func (c *RefundOptions) URLValues(apiKey string, signGenerators ...sdk_options.S
 	if len(c.Nonce) > 0 {
 		formData.Set(`nonce`, c.Nonce)
 	}
-
-	var signGenerator func(url.Values, string) string
-	if len(signGenerators) > 0 {
-		signGenerator = signGenerators[0]
-	} else {
-		signGenerator = sdk_options.GenSign
-	}
-	if signGenerator != nil {
-		sign := signGenerator(formData, apiKey)
-		formData.Set(`sign`, sign)
-	}
 	return formData
-}
-
-func (c *RefundOptions) Encode(apiKey string, signGenerators ...sdk_options.Signaturer) string {
-	return c.URLValues(apiKey, signGenerators...).Encode()
 }
 
 func (c *RefundOptions) String() string {

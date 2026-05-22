@@ -3,12 +3,12 @@ package sdk_options
 import (
 	"net/url"
 
-	"github.com/coscms/sdk/sdk_utils"
+	"github.com/coscms/stdauth"
 )
 
 // SignString 生成签名字符串
 func SignString(raw string, apiKey string) string {
-	return sdk_utils.Md5(sdk_utils.Md5(raw) + apiKey)
+	return stdauth.SignString(raw, apiKey)
 }
 
 // CheckSign 检查签名是否匹配
@@ -22,5 +22,5 @@ func CheckSign(raw string, sign string, apiKey string) error {
 // GenSign 根据url.Values类型值生成签名
 func GenSign(formData url.Values, apiKey string) string {
 	formData.Del(`sign`)
-	return SignString(formData.Encode(), apiKey)
+	return stdauth.MakeSign(formData, apiKey)
 }

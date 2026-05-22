@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"net/url"
 	"strconv"
-
-	"github.com/coscms/sdk/sdk_options"
 )
 
 // NotifyOptions  通知参数
@@ -65,7 +63,7 @@ func (c *NotifyOptions) SetDefaults(get func(string) string) *NotifyOptions {
 	return c
 }
 
-func (c *NotifyOptions) URLValues(apiKey string, signGenerators ...sdk_options.Signaturer) url.Values {
+func (c *NotifyOptions) URLValues() url.Values {
 	params := url.Values{}
 	params.Set(`appID`, c.AppID)
 	params.Set(`orderNo`, c.OrderNo)
@@ -96,22 +94,7 @@ func (c *NotifyOptions) URLValues(apiKey string, signGenerators ...sdk_options.S
 	if len(c.Nonce) > 0 {
 		params.Set(`nonce`, c.Nonce)
 	}
-
-	var signGenerator sdk_options.Signaturer
-	if len(signGenerators) > 0 {
-		signGenerator = signGenerators[0]
-	} else {
-		signGenerator = sdk_options.GenSign
-	}
-	if signGenerator != nil {
-		sign := signGenerator(params, apiKey)
-		params.Set(`sign`, sign)
-	}
 	return params
-}
-
-func (c *NotifyOptions) Encode(apiKey string, signGenerators ...sdk_options.Signaturer) string {
-	return c.URLValues(apiKey, signGenerators...).Encode()
 }
 
 func (c *NotifyOptions) IsSuccess() bool {

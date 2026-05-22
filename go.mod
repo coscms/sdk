@@ -4,7 +4,7 @@ go 1.26.2
 
 require (
 	github.com/admpub/resty/v2 v2.7.3
-	github.com/coscms/stdauth v0.0.0-20260522033127-12dbfa6748ec
+	github.com/coscms/stdauth v0.0.0-20260522075812-24b2e07d17b4
 	github.com/webx-top/restyclient v0.0.6
 )
 

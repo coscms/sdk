@@ -3,7 +3,7 @@ package sdk_options
 import "net/url"
 
 type URLValuesGenerator interface {
-	URLValues(apiKey string, signGenerators ...Signaturer) url.Values
+	URLValues() url.Values
 }
 
 type Type string
