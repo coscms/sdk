@@ -10,10 +10,10 @@ func (o *Options) ToURL(urlPath string, strength ...bool) (uri string, formData 
 	formData = o.generator.URLValues(o.GetAppSecret(), o.signaturer)
 	appID := formData.Get(`appID`)
 	if len(appID) == 0 {
-		appID = o.GetAppId()
+		appID = o.GetAppID()
 		formData.Set(`appID`, appID)
 	} else {
-		oldAppID := o.GetAppId()
+		oldAppID := o.GetAppID()
 		if oldAppID != appID {
 			err = ErrAppIDConflict
 			return

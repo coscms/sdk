@@ -2,13 +2,13 @@ package sdk_options
 
 type AppInfoGetter interface {
 	GetAppSecret() string
-	GetAppId() string
+	GetAppID() string
 	GetApiEndpoint() string
 }
 
 type AppInfo struct {
 	Secret      string
-	AppId       string
+	AppID       string
 	ApiEndpoint string
 }
 
@@ -16,8 +16,8 @@ func (a AppInfo) GetAppSecret() string {
 	return a.Secret
 }
 
-func (a AppInfo) GetAppId() string {
-	return a.AppId
+func (a AppInfo) GetAppID() string {
+	return a.AppID
 }
 
 func (a AppInfo) GetApiEndpoint() string {

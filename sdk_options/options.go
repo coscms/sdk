@@ -76,9 +76,9 @@ func (o *Options) GetAppInfoGetter() AppInfoGetter {
 	return o.appInfoGetter
 }
 
-func (o *Options) GetAppId() string {
+func (o *Options) GetAppID() string {
 	if o.appInfoGetter != nil {
-		return o.appInfoGetter.GetAppId()
+		return o.appInfoGetter.GetAppID()
 	}
 	return ``
 }
