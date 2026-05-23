@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-// RefundOptions  退款参数
+// RefundOptions 退款参数
 type RefundOptions struct {
 	// - App信息 -
 
@@ -29,35 +29,38 @@ type RefundOptions struct {
 	Nonce string `json:"nonce,omitempty" xml:"nonce,omitempty"`
 }
 
-func (c *RefundOptions) SetDefaults(get func(string) string) *RefundOptions {
-	if len(c.AppID) == 0 {
-		c.AppID = get(`appId`)
+// SetDefaults fills empty fields with values from the given config function.
+func (r *RefundOptions) SetDefaults(get func(string) string) *RefundOptions {
+	if len(r.AppID) == 0 {
+		r.AppID = get(`appId`)
 	}
-	if len(c.NotifyURL) == 0 {
-		c.NotifyURL = get(`notifyUrl`)
+	if len(r.NotifyURL) == 0 {
+		r.NotifyURL = get(`notifyUrl`)
 	}
-	return c
+	return r
 }
 
-func (c *RefundOptions) URLValues() url.Values {
+// URLValues serializes the refund options to url.Values.
+func (r *RefundOptions) URLValues() url.Values {
 	formData := url.Values{}
-	formData.Set(`appID`, c.AppID)
-	formData.Set(`orderNo`, c.OrderNo)
-	formData.Set(`outOrderNo`, c.OutOrderNo)
-	formData.Set(`refundAmount`, strconv.FormatFloat(c.RefundAmount, 'f', -1, 64))
-	formData.Set(`outRefundNo`, c.OutRefundNo)
-	formData.Set(`refundReason`, c.RefundReason)
-	formData.Set(`notifyURL`, c.NotifyURL)
-	if c.AlwaysSave != nil {
-		formData.Set(`alwaysSave`, strconv.FormatBool(*c.AlwaysSave))
+	formData.Set(`appID`, r.AppID)
+	formData.Set(`orderNo`, r.OrderNo)
+	formData.Set(`outOrderNo`, r.OutOrderNo)
+	formData.Set(`refundAmount`, strconv.FormatFloat(r.RefundAmount, 'f', -1, 64))
+	formData.Set(`outRefundNo`, r.OutRefundNo)
+	formData.Set(`refundReason`, r.RefundReason)
+	formData.Set(`notifyURL`, r.NotifyURL)
+	if r.AlwaysSave != nil {
+		formData.Set(`alwaysSave`, strconv.FormatBool(*r.AlwaysSave))
 	}
-	if len(c.Nonce) > 0 {
-		formData.Set(`nonce`, c.Nonce)
+	if len(r.Nonce) > 0 {
+		formData.Set(`nonce`, r.Nonce)
 	}
 	return formData
 }
 
-func (c *RefundOptions) String() string {
-	b, _ := json.Marshal(c)
+// String returns the JSON representation of RefundOptions.
+func (r *RefundOptions) String() string {
+	b, _ := json.Marshal(r)
 	return string(b)
 }

@@ -1,6 +1,6 @@
 package sdk_payment
 
-// TradeStatus 通知交易状态
+// TradeStatus represents a payment notification status.
 type TradeStatus string
 
 const (
@@ -15,28 +15,33 @@ const (
 
 	// TradeStatusExpired 已过期
 	TradeStatusExpired TradeStatus = "expired"
-	// TradeStatusExpired 已删除
+	// TradeStatusDeleted 已删除
 	TradeStatusDeleted TradeStatus = "deleted"
 )
 
+// IsSuccess returns true if the status is success.
 func (s TradeStatus) IsSuccess() bool {
 	return s == TradeStatusSuccess
 }
 
+// IsFailure returns true if the status is failure.
 func (s TradeStatus) IsFailure() bool {
 	return s == TradeStatusFailure
 }
 
+// IsCancelled returns true if the status is cancelled.
 func (s TradeStatus) IsCancelled() bool {
 	return s == TradeStatusCancelled
 }
 
 // -----
 
+// IsExpired returns true if the status is expired.
 func (s TradeStatus) IsExpired() bool {
 	return s == TradeStatusExpired
 }
 
+// IsDeleted returns true if the status is deleted.
 func (s TradeStatus) IsDeleted() bool {
 	return s == TradeStatusDeleted
 }

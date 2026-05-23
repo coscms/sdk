@@ -6,7 +6,7 @@ import (
 	"github.com/coscms/stdauth"
 )
 
-// SignString 生成签名字符串
+// SignString generates a signature string from raw content and apiKey.
 func SignString(raw string, apiKey string) string {
 	return stdauth.SignString(raw, apiKey)
 }

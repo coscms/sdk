@@ -11,6 +11,7 @@ import (
 	"github.com/webx-top/restyclient"
 )
 
+// Response represents a standard API response.
 type Response struct {
 	Code  int
 	State string `json:",omitempty" xml:",omitempty"`
@@ -20,17 +21,20 @@ type Response struct {
 	Data  any    `json:",omitempty" xml:",omitempty"`
 }
 
+// IsSuccess returns true if the API response indicates success.
 func (r Response) IsSuccess() bool {
 	return r.Code == 1
 }
 
+// Submit sends a request to the API and returns a parsed Response.
 func Submit(ctx context.Context, apiURL string, formData url.Values, method ...string) (*Response, error) {
 	apiResp := &Response{}
 	_, err := SubmitWithRecv(ctx, apiResp, apiURL, formData, method...)
 	return apiResp, err
 }
 
-func SubmitWithRecv(ctx context.Context, recv interface{}, apiURL string, formData url.Values, method ...string) (*resty.Response, error) {
+// SubmitWithRecv sends a request and decodes the response into the given receiver.
+func SubmitWithRecv(ctx context.Context, recv any, apiURL string, formData url.Values, method ...string) (*resty.Response, error) {
 	request := restyclient.Retryable()
 	request.SetContext(ctx)
 	request.SetResult(recv)
@@ -55,6 +59,7 @@ func SubmitWithRecv(ctx context.Context, recv interface{}, apiURL string, formDa
 	return resp, err
 }
 
+// Submitx sends a request and returns the response as a map and raw body string.
 func Submitx(ctx context.Context, apiURL string, formData url.Values, method ...string) (map[string]any, string, error) {
 	apiResp := map[string]any{}
 	var body string
@@ -65,6 +70,7 @@ func Submitx(ctx context.Context, apiURL string, formData url.Values, method ...
 	return apiResp, body, err
 }
 
+// GetValueByKey looks up a key in a map, with optional fallback keys.
 func GetValueByKey(mp map[string]any, key string, fallbackKeys ...string) any {
 	if len(mp) == 0 {
 		return nil

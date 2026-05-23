@@ -11,7 +11,6 @@ func BuildURLValues(values url.Values, secret string, signaturer Signaturer) url
 	if values == nil {
 		values = url.Values{}
 	}
-	//values.Set(`appID`, appID)
 	values.Set(`timestamp`, strconv.FormatInt(time.Now().Unix(), 10))
 	values.Del(`sign`)
 	if signaturer == nil {

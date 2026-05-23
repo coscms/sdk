@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-// NotifyOptions  通知参数
+// NotifyOptions 通知参数
 type NotifyOptions struct {
 	// - App信息 -
 
@@ -53,63 +53,69 @@ type NotifyOptions struct {
 	Nonce string `json:"nonce,omitempty" xml:"nonce,omitempty"`
 }
 
-func (c *NotifyOptions) SetDefaults(get func(string) string) *NotifyOptions {
-	if len(c.AppID) == 0 {
-		c.AppID = get(`appId`)
+// SetDefaults fills empty fields with values from the given config function.
+func (n *NotifyOptions) SetDefaults(get func(string) string) *NotifyOptions {
+	if len(n.AppID) == 0 {
+		n.AppID = get(`appId`)
 	}
-	if len(c.ProductID) == 0 {
-		c.ProductID = get(`productId`)
+	if len(n.ProductID) == 0 {
+		n.ProductID = get(`productId`)
 	}
-	return c
+	return n
 }
 
-func (c *NotifyOptions) URLValues() url.Values {
+// URLValues serializes the notify options to url.Values.
+func (n *NotifyOptions) URLValues() url.Values {
 	params := url.Values{}
-	params.Set(`appID`, c.AppID)
-	params.Set(`orderNo`, c.OrderNo)
-	params.Set(`outOrderNo`, c.OutOrderNo)
-	params.Set(`price`, strconv.FormatFloat(c.Price, 'f', -1, 64))
-	params.Set(`realPrice`, strconv.FormatFloat(c.RealPrice, 'f', -1, 64))
-	params.Set(`type`, c.Type)
-	params.Set(`paidAt`, strconv.FormatUint(uint64(c.PaidAt), 10))
-	params.Set(`extend`, c.Extend)
-	params.Set(`productID`, c.ProductID)
-	params.Set(`productType`, c.ProductType)
-	if len(c.Subtype) > 0 {
-		params.Set(`subtype`, c.Subtype)
+	params.Set(`appID`, n.AppID)
+	params.Set(`orderNo`, n.OrderNo)
+	params.Set(`outOrderNo`, n.OutOrderNo)
+	params.Set(`price`, strconv.FormatFloat(n.Price, 'f', -1, 64))
+	params.Set(`realPrice`, strconv.FormatFloat(n.RealPrice, 'f', -1, 64))
+	params.Set(`type`, n.Type)
+	params.Set(`paidAt`, strconv.FormatUint(uint64(n.PaidAt), 10))
+	params.Set(`extend`, n.Extend)
+	params.Set(`productID`, n.ProductID)
+	params.Set(`productType`, n.ProductType)
+	if len(n.Subtype) > 0 {
+		params.Set(`subtype`, n.Subtype)
 	}
-	if len(c.Status) > 0 {
-		params.Set(`status`, string(c.Status))
+	if len(n.Status) > 0 {
+		params.Set(`status`, string(n.Status))
 	}
-	if len(c.Description) > 0 {
-		params.Set(`description`, c.Description)
+	if len(n.Description) > 0 {
+		params.Set(`description`, n.Description)
 	}
-	if len(c.OutRefundNo) > 0 {
-		params.Set(`outRefundNo`, c.OutRefundNo)
-		if len(c.RefundNo) > 0 {
-			params.Set(`refundNo`, c.RefundNo)
+	if len(n.OutRefundNo) > 0 {
+		params.Set(`outRefundNo`, n.OutRefundNo)
+		if len(n.RefundNo) > 0 {
+			params.Set(`refundNo`, n.RefundNo)
 		}
-		params.Set(`refundAmount`, strconv.FormatFloat(c.RefundAmount, 'f', -1, 64))
+		params.Set(`refundAmount`, strconv.FormatFloat(n.RefundAmount, 'f', -1, 64))
 	}
-	if len(c.Nonce) > 0 {
-		params.Set(`nonce`, c.Nonce)
+	if len(n.Nonce) > 0 {
+		params.Set(`nonce`, n.Nonce)
 	}
 	return params
 }
 
-func (c *NotifyOptions) IsSuccess() bool {
-	return c.Status.IsSuccess()
+// IsSuccess returns true if the notify status is success.
+func (n *NotifyOptions) IsSuccess() bool {
+	return n.Status.IsSuccess()
 }
 
-func (c *NotifyOptions) IsFailure() bool {
-	return c.Status.IsFailure()
+// IsFailure returns true if the notify status is failure.
+func (n *NotifyOptions) IsFailure() bool {
+	return n.Status.IsFailure()
 }
 
-func (c *NotifyOptions) IsCancelled() bool {
-	return c.Status.IsCancelled()
+// IsCancelled returns true if the notify status is cancelled.
+func (n *NotifyOptions) IsCancelled() bool {
+	return n.Status.IsCancelled()
 }
 
-func (c *NotifyOptions) String() string {
-	b, _ := json.Marshal(c)
+// String returns the JSON representation of NotifyOptions.
+func (n *NotifyOptions) String() string {
+	b, _ := json.Marshal(n)
 	return string(b)
 }

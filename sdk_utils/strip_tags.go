@@ -2,6 +2,7 @@ package sdk_utils
 
 import "strings"
 
+// StripTags removes HTML and XML tags from a string, including script and style content.
 func StripTags(v string) string {
 	var buf strings.Builder
 	buf.Grow(len(v))
@@ -44,7 +45,7 @@ func StripTags(v string) string {
 
 		// Handle HTML comments: <!-- ... -->
 		if len(trimmedContent) > 0 && trimmedContent[0] == '!' {
-			_ = tagContent // tagContent used implicitly via trimmedContent
+			// trimmedContent is derived from tagContent above
 			if strings.HasPrefix(trimmedContent, "!--") {
 				// Find closing -->
 				closeComment := strings.Index(v[gt+1:], "-->")

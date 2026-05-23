@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-// CheckoutOptions  付款参数
+// CheckoutOptions 付款参数
 type CheckoutOptions struct {
 	// - App信息 -
 
@@ -46,6 +46,7 @@ type CheckoutOptions struct {
 	Nonce string `json:"nonce,omitempty" xml:"nonce,omitempty"`
 }
 
+// SetDefaults fills empty fields with values from the given config function.
 func (c *CheckoutOptions) SetDefaults(get func(string) string) *CheckoutOptions {
 	if len(c.AppID) == 0 {
 		c.AppID = get(`appId`)
@@ -68,6 +69,7 @@ func (c *CheckoutOptions) SetDefaults(get func(string) string) *CheckoutOptions 
 	return c
 }
 
+// URLValues serializes the checkout options to url.Values.
 func (c *CheckoutOptions) URLValues() url.Values {
 	formData := url.Values{}
 	formData.Set(`appID`, c.AppID)
@@ -101,6 +103,7 @@ func (c *CheckoutOptions) URLValues() url.Values {
 	return formData
 }
 
+// String returns the JSON representation of CheckoutOptions.
 func (c *CheckoutOptions) String() string {
 	b, _ := json.Marshal(c)
 	return string(b)

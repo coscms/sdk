@@ -6,7 +6,7 @@ import (
 	"io"
 )
 
-// Md5 md5 hash string
+// Md5 computes the MD5 hex digest of the given string.
 func Md5(str string) string {
 	m := md5.New()
 	io.WriteString(m, str)
