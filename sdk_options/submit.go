@@ -20,6 +20,10 @@ type Response struct {
 	Data  any    `json:",omitempty" xml:",omitempty"`
 }
 
+func (r Response) IsSuccess() bool {
+	return r.Code == 1
+}
+
 func Submit(ctx context.Context, apiURL string, formData url.Values, method ...string) (*Response, error) {
 	apiResp := &Response{}
 	_, err := SubmitWithRecv(ctx, apiResp, apiURL, formData, method...)
