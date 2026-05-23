@@ -64,3 +64,20 @@ func Submitx(ctx context.Context, apiURL string, formData url.Values, method ...
 	}
 	return apiResp, body, err
 }
+
+func GetValueByKey(mp map[string]any, key string, fallbackKeys ...string) any {
+	if len(mp) == 0 {
+		return nil
+	}
+	val, ok := mp[key]
+	if ok {
+		return val
+	}
+	for _, fallback := range fallbackKeys {
+		val, ok := mp[fallback]
+		if ok {
+			return val
+		}
+	}
+	return nil
+}
