@@ -2,6 +2,7 @@ package sdk_payment
 
 import (
 	"encoding/json"
+	"errors"
 	"net/url"
 	"strconv"
 )
@@ -29,8 +30,7 @@ type NotifyOptions struct {
 	ProductType string `json:"productType" xml:"productType"` // 商品类型
 
 	// 通知类型(payment-付款通知;refund-退款通知)
-	Type    string `json:"type" xml:"type"`
-	Subtype string `json:"subtype,omitempty" xml:"subtype,omitempty"` // 用于第四方支付时选择支付方式
+	Type string `json:"type" xml:"type"`
 
 	// - 退款信息 -
 
@@ -77,9 +77,6 @@ func (n *NotifyOptions) URLValues() url.Values {
 	params.Set(`extend`, n.Extend)
 	params.Set(`productID`, n.ProductID)
 	params.Set(`productType`, n.ProductType)
-	if len(n.Subtype) > 0 {
-		params.Set(`subtype`, n.Subtype)
-	}
 	if len(n.Status) > 0 {
 		params.Set(`status`, string(n.Status))
 	}
@@ -118,4 +115,33 @@ func (n *NotifyOptions) IsCancelled() bool {
 func (n *NotifyOptions) String() string {
 	b, _ := json.Marshal(n)
 	return string(b)
+}
+
+func (n *NotifyOptions) Validate() error {
+	if len(n.AppID) == 0 {
+		return errors.New(`appID is required`)
+	}
+	if len(n.Status) == 0 {
+		return errors.New(`status is required`)
+	}
+	switch n.Type {
+	case `payment`:
+		if len(n.OutOrderNo) == 0 {
+			return errors.New(`outOrderNo is required`)
+		}
+		if n.RealPrice <= 0 {
+			return errors.New(`realPrice is required`)
+		}
+
+	case `refund`:
+		if len(n.OutRefundNo) == 0 {
+			return errors.New(`outRefundNo is required`)
+		}
+		if n.RefundAmount <= 0 {
+			return errors.New(`refundAmount is required`)
+		}
+
+	default:
+	}
+	return nil
 }
