@@ -20,7 +20,7 @@ func (o *Options) ToURLWithGenerator(generator URLValuesGenerator, urlPath strin
 		formData.Set(`appID`, appID)
 	} else {
 		oldAppID := o.GetAppID()
-		if oldAppID != appID {
+		if len(oldAppID) > 0 && oldAppID != appID {
 			err = ErrAppIDConflict
 			return
 		}
