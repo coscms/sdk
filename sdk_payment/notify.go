@@ -33,6 +33,7 @@ type NotifyOptions struct {
 	// 通知类型(payment-付款通知;refund-退款通知)
 	Type string `json:"type" xml:"type"`
 
+	Subtype string `json:"subtype,omitempty" xml:"subtype,omitempty"` // 用于第四方支付时选择支付方式
 	// - 退款信息 -
 
 	// 退款单号
@@ -78,6 +79,9 @@ func (n *NotifyOptions) URLValues() url.Values {
 	params.Set(`extend`, n.Extend)
 	params.Set(`productID`, n.ProductID)
 	params.Set(`productType`, n.ProductType)
+	if len(n.Subtype) > 0 {
+		params.Set(`subtype`, n.Subtype)
+	}
 	if len(n.Status) > 0 {
 		params.Set(`status`, string(n.Status))
 	}
