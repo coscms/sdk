@@ -10,40 +10,40 @@ import (
 type CheckoutOptions struct {
 	// - App信息 -
 
-	AppID  string `json:"appID" xml:"appID" valid:"required" validate:"required"` // appID
-	AppUID string `json:"appUID" xml:"appUID"`                                    // 你的用户ID
+	AppID  string `json:"appID" xml:"appID" form:"appID" valid:"required" validate:"required"` // appID
+	AppUID string `json:"appUID" xml:"appUID" form:"appUID"`                                   // 你的用户ID
 
 	// - 订单信息 -
 
 	// 币种 支持的值：https://github.com/webx-top/payment/blob/master/config/constants.go
-	Currency   string  `json:"currency" xml:"currency"`
-	Price      float64 `json:"price" xml:"price" valid:"required;min(0.01)" validate:"required"` // 价格
-	OutOrderNo string  `json:"outOrderNo" xml:"outOrderNo" valid:"required" validate:"required"` // 你的订单号
-	Subject    string  `json:"subject" xml:"subject" valid:"required" validate:"required"`       // 订单主题(一般为商品名)
-	ExpiresTs  uint64  `json:"expiresTs" xml:"expiresTs"`                                        // 过期时间戳(秒)
-	Extend     string  `json:"extend" xml:"extend"`                                              // 扩展信息
+	Currency   string  `json:"currency" xml:"currency" form:"currency"`
+	Price      float64 `json:"price" xml:"price" form:"price" valid:"required;min(0.01)" validate:"required"`      // 价格
+	OutOrderNo string  `json:"outOrderNo" xml:"outOrderNo" form:"outOrderNo" valid:"required" validate:"required"` // 你的订单号
+	Subject    string  `json:"subject" xml:"subject" form:"subject" valid:"required" validate:"required"`          // 订单主题(一般为商品名)
+	ExpiresTs  uint64  `json:"expiresTs" xml:"expiresTs" form:"expiresTs"`                                         // 过期时间戳(秒)
+	Extend     string  `json:"extend" xml:"extend" form:"extend"`                                                  // 扩展信息
 
 	// - 网址信息 -
 
-	NotifyURL string `json:"notifyURL" xml:"notifyURL"` // 支付回调
-	ReturnURL string `json:"returnURL" xml:"returnURL"` // 支付成功后返回地址
-	CancelURL string `json:"cancelURL" xml:"cancelURL"` // 支付放弃后返回地址
+	NotifyURL string `json:"notifyURL" xml:"notifyURL" form:"notifyURL"` // 支付回调
+	ReturnURL string `json:"returnURL" xml:"returnURL" form:"returnURL"` // 支付成功后返回地址
+	CancelURL string `json:"cancelURL" xml:"cancelURL" form:"cancelURL"` // 支付放弃后返回地址
 
 	// - 产品信息 -
 
-	ProductID        string `json:"productID" xml:"productID"`               // 商品ID
-	ProductType      string `json:"productType" xml:"productType"`           // 商品类型(自己定义)
-	IsVirtualProduct bool   `json:"isVirtualProduct" xml:"isVirtualProduct"` // 是否是虚拟商品
+	ProductID        string `json:"productID" xml:"productID" form:"productID"`                      // 商品ID
+	ProductType      string `json:"productType" xml:"productType" form:"productType"`                // 商品类型(自己定义)
+	IsVirtualProduct bool   `json:"isVirtualProduct" xml:"isVirtualProduct" form:"isVirtualProduct"` // 是否是虚拟商品
 
 	// 付款方式(alipay,wechat)
-	Type    string `json:"type" xml:"type" valid:"required" validate:"required"`
-	Subtype string `json:"subtype,omitempty" xml:"subtype,omitempty"` // 用于第四方支付时选择支付方式
+	Type    string `json:"type" xml:"type" form:"type" valid:"required" validate:"required"`
+	Subtype string `json:"subtype,omitempty" xml:"subtype,omitempty" form:"subtype"` // 用于第四方支付时选择支付方式
 	// 设备 支持的值：https://github.com/webx-top/payment/blob/master/config/constants.go
-	Device string `json:"device" xml:"device"`
+	Device string `json:"device" xml:"device" form:"device"`
 	// 客户IP
-	CustomerIP string `json:"customerIP" xml:"customerIP"`
+	CustomerIP string `json:"customerIP" xml:"customerIP" form:"customerIP"`
 
-	Nonce string `json:"nonce,omitempty" xml:"nonce,omitempty"`
+	Nonce string `json:"nonce,omitempty" xml:"nonce,omitempty" form:"nonce"`
 }
 
 // SetDefaults fills empty fields with values from the given config function.
