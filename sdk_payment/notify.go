@@ -12,47 +12,47 @@ import (
 type NotifyOptions struct {
 	// - App信息 -
 
-	AppID string `json:"appID" xml:"appID"` // appID
+	AppID string `json:"appID" xml:"appID" form:"appID"` // appID
 
 	// - 订单信息 -
 
 	// 订单号
-	OrderNo string `json:"orderNo" xml:"orderNo"`
+	OrderNo string `json:"orderNo" xml:"orderNo" form:"orderNo"`
 	// 业务方订单号
-	OutOrderNo string  `json:"outOrderNo" xml:"outOrderNo"`
-	Price      float64 `json:"price" xml:"price"`         // 售价
-	RealPrice  float64 `json:"realPrice" xml:"realPrice"` // 实付金额
-	PaidAt     uint    `json:"paidAt" xml:"paidAt"`       // 付款时间
-	Extend     string  `json:"extend" xml:"extend"`       // 扩展信息
+	OutOrderNo string  `json:"outOrderNo" xml:"outOrderNo" form:"outOrderNo"`
+	Price      float64 `json:"price" xml:"price" form:"price"`             // 售价
+	RealPrice  float64 `json:"realPrice" xml:"realPrice" form:"realPrice"` // 实付金额
+	PaidAt     uint    `json:"paidAt" xml:"paidAt" form:"paidAt"`          // 付款时间
+	Extend     string  `json:"extend" xml:"extend" form:"extend"`          // 扩展信息
 
 	// - 产品信息 -
 
-	ProductID   string `json:"productID" xml:"productID"`     // 商品ID
-	ProductType string `json:"productType" xml:"productType"` // 商品类型
+	ProductID   string `json:"productID" xml:"productID" form:"productID"`       // 商品ID
+	ProductType string `json:"productType" xml:"productType" form:"productType"` // 商品类型
 
 	// 通知类型(payment-付款通知;refund-退款通知)
-	Type string `json:"type" xml:"type"`
+	Type string `json:"type" xml:"type" form:"type"`
 
-	Subtype string `json:"subtype,omitempty" xml:"subtype,omitempty"` // 用于第四方支付时选择支付方式
+	Subtype string `json:"subtype,omitempty" xml:"subtype,omitempty" form:"subtype"` // 用于第四方支付时选择支付方式
 	// - 退款信息 -
 
 	// 退款单号
-	RefundNo string `json:"refundNo,omitempty" xml:"refundNo,omitempty"`
+	RefundNo string `json:"refundNo,omitempty" xml:"refundNo,omitempty" form:"refundNo"`
 	// 业务方退款单号
-	OutRefundNo  string  `json:"outRefundNo,omitempty" xml:"outRefundNo,omitempty"`
-	RefundAmount float64 `json:"refundAmount,omitempty" xml:"refundAmount,omitempty"` // 退款金额
+	OutRefundNo  string  `json:"outRefundNo,omitempty" xml:"outRefundNo,omitempty" form:"outRefundNo"`
+	RefundAmount float64 `json:"refundAmount,omitempty" xml:"refundAmount,omitempty" form:"refundAmount"` // 退款金额
 
 	// - 通用：适用于付款和退款 -
 
 	// 支付宝等支付网关平台的交易单号
-	TransactionNo string `json:"transactionNo" xml:"transactionNo"`
+	TransactionNo string `json:"transactionNo" xml:"transactionNo" form:"transactionNo"`
 
 	// - 状态 -
 
-	Status      TradeStatus `json:"status,omitempty" xml:"status,omitempty"`           // 状态
-	Description string      `json:"description,omitempty" xml:"description,omitempty"` // 说明
+	Status      TradeStatus `json:"status,omitempty" xml:"status,omitempty" form:"status"`                // 状态
+	Description string      `json:"description,omitempty" xml:"description,omitempty" form:"description"` // 说明
 
-	Nonce string `json:"nonce,omitempty" xml:"nonce,omitempty"`
+	Nonce string `json:"nonce,omitempty" xml:"nonce,omitempty" form:"nonce"`
 }
 
 // SetDefaults fills empty fields with values from the given config function.
