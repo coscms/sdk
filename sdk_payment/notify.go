@@ -3,6 +3,7 @@ package sdk_payment
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/url"
 	"strconv"
 )
@@ -142,6 +143,7 @@ func (n *NotifyOptions) Validate() error {
 		}
 
 	default:
+		return fmt.Errorf(`%w: %s`, errors.ErrUnsupported, n.Type)
 	}
 	return nil
 }
