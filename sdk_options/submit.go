@@ -11,6 +11,10 @@ import (
 	"github.com/webx-top/restyclient"
 )
 
+const (
+	CodeSuccess = 1
+)
+
 // Response represents a standard API response.
 type Response struct {
 	Code  int
@@ -23,7 +27,7 @@ type Response struct {
 
 // IsSuccess returns true if the API response indicates success.
 func (r Response) IsSuccess() bool {
-	return r.Code == 1
+	return r.Code == CodeSuccess
 }
 
 // Submit sends a request to the API and returns a parsed Response.

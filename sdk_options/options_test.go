@@ -12,12 +12,12 @@ type testAppInfo struct {
 }
 
 func (t *testAppInfo) GetAppID() string       { return t.AppID }
-func (t *testAppInfo) GetAppSecret() string    { return t.AppSecret }
-func (t *testAppInfo) GetApiEndpoint() string  { return t.ApiEndpoint }
+func (t *testAppInfo) GetAppSecret() string   { return t.AppSecret }
+func (t *testAppInfo) GetApiEndpoint() string { return t.ApiEndpoint }
 
 func TestNewOptions(t *testing.T) {
 	app := &testAppInfo{AppID: "test-id", AppSecret: "test-secret", ApiEndpoint: "https://api.example.com"}
-	opts := New(TypeOauth, app)
+	opts := New(TypeOAuth, app)
 
 	if opts.GetAppID() != "test-id" {
 		t.Errorf("expected test-id, got %s", opts.GetAppID())
@@ -28,7 +28,7 @@ func TestNewOptions(t *testing.T) {
 	if opts.GetApiEndpoint() != "https://api.example.com" {
 		t.Errorf("expected https://api.example.com, got %s", opts.GetApiEndpoint())
 	}
-	if opts.Type != TypeOauth {
+	if opts.Type != TypeOAuth {
 		t.Errorf("expected TypeOauth, got %s", opts.Type)
 	}
 }
@@ -70,7 +70,7 @@ func TestSetAppInfoGetter(t *testing.T) {
 
 func TestGetApiEndpointTrimSlash(t *testing.T) {
 	app := &testAppInfo{AppID: "test-id", AppSecret: "test-secret", ApiEndpoint: "https://api.example.com/"}
-	opts := New(TypeOauth, app)
+	opts := New(TypeOAuth, app)
 
 	if opts.GetApiEndpoint() != "https://api.example.com" {
 		t.Errorf("expected https://api.example.com, got %s", opts.GetApiEndpoint())
