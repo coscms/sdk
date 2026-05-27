@@ -12,8 +12,8 @@ type URLValuesGenerator interface {
 type Type string
 
 const (
-	// TypeOauth 社区登录类型
-	TypeOauth Type = "oauth"
+	// TypeOAuth 社区登录类型
+	TypeOAuth Type = "oauth"
 	// TypePayment 支付类型
 	TypePayment Type = "payment"
 )
